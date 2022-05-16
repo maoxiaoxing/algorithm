@@ -32,7 +32,20 @@ class LinkNodeList {
   }
 
   toString() {
-    if (!this.head) return ''
+    let str = ''
+    // 链表为空，直接返回空字符串
+    if (!this.head) return str
+    // 否则 缓存第一个元素
+    let cur = this.head
+    // 初始化第一个值
+    str = `${cur.val}`
+    // 遍历链表
+    while (cur.next) {
+      const next = cur.next
+      str = `${str},${next.val}`
+      cur = cur.next
+    }
+    return str
   }
 }
 
@@ -41,4 +54,4 @@ linkList.append(1)
 linkList.append(7)
 linkList.append(3)
 
-console.log(linkList)
+console.log(linkList.toString())
