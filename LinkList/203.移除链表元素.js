@@ -11,6 +11,7 @@
  * @return {ListNode}
  */
  var removeElements = function(head, val) {
+   // 哨兵
   let ele = {
       next: head
   }
