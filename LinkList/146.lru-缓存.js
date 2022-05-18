@@ -2,6 +2,7 @@
  * @param {number} capacity
  */
  var LRUCache = function(capacity) {
+  // Map 模拟链表
   this.cache = new Map()
   this.max = capacity
 };
