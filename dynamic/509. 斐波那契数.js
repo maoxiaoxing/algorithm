@@ -13,14 +13,26 @@
 // };
 
 
-// 尾递归
-var fib = function(n) {
-  const dfs = (_n) => {
-      if (_n === 0) return 0
-      if (_n === 1) return 1
+// // 尾递归
+// var fib = function(n) {
+//   const dfs = (_n) => {
+//       if (_n === 0) return 0
+//       if (_n === 1) return 1
+//       return dfs(_n - 1) + dfs(_n - 2)
+//   }
+//   return dfs(n)
+// };
 
-      return dfs(_n - 1) + dfs(_n - 2)
+
+var fib = function(n) {
+  // 递归缓存
+  const helper = (memo, n) => {
+      if(n<2) return n
+      if (memo[n]) return memo[n]
+      memo[n] = helper(memo, n-1) + helper(memo, n-2)
+      return memo[n]
   }
-  return dfs(n)
+  const memo = []
+  return helper(memo, n)
 };
 
