@@ -26,6 +26,7 @@ function limit(maxCount) {
       const task = taskQueue.shift()
       task()
     }
+    // next()
   }
   
   const runner = (fn, ...args) => {
