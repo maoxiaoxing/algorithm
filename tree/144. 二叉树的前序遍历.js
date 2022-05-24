@@ -21,3 +21,17 @@
   dfs(root)
   return res
 };
+
+var preorderTraversal = function(root) {
+  if (!root) return []
+  const res = []
+  const stack = [root]
+
+  while (stack.length) {
+      const node = stack.pop()
+      res.push(node.val)
+      node.right && stack.push(node.right)
+      node.left && stack.push(node.left)
+  }
+  return res
+};
