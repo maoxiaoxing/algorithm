@@ -22,7 +22,7 @@ function limit(maxCount) {
 
   const push = (fn, resolve, args) => {
     taskQueue.push(run.bind(null, fn, resolve, args))
-    if (taskQueue.length && activeCount < taskQueue.length) {
+    if (taskQueue.length && activeCount < maxCount) {
       const task = taskQueue.shift()
       task()
     }
