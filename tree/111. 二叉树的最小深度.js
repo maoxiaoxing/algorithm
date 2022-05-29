@@ -20,3 +20,20 @@
   }
   return dfs(root)
 };
+
+var minDepth = function(root) {
+  // 广度优先
+  if (!root) return 0
+  const queue = [root]
+  let dep = 0
+  while (true) {
+      dep++
+      let size = queue.length
+      while (size--) {
+          const node = queue.shift()
+          if (!node.left && !node.right) return dep
+          node.left && queue.push(node.left)
+          node.right && queue.push(node.right)
+      }
+  }
+};
