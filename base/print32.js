@@ -6,4 +6,8 @@ function print(num) {
   }
   console.log(res)
 }
-print(4)
+// print(4)
+// print(-1)
+print(Number.MAX_SAFE_INTEGER)
+print(-2)
+console.log(~-2)
