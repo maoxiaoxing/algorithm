@@ -23,3 +23,9 @@ print(a|b)
 print(a&b)
 // 相同为假，不同为真
 print(a^b)
+
+const min = Number.MIN_VALUE
+const noMin = ~min
+print(min)
+console.log(min)
+console.log(noMin)
