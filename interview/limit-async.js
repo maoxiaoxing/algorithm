@@ -1,15 +1,13 @@
 
 function limit(maxCount) {
 
-  const taskQueue = []
+  const queue = []
   let activeCount = 0
 
   const next = () => {
-    console.log(activeCount, 'activeCount')
     activeCount--
-    if (taskQueue.length && activeCount < taskQueue.length) {
-      const task = taskQueue.shift()
-      task()
+    if (queue.length > 0) {
+      queue.shift()()
     }
   }
 
@@ -17,18 +15,17 @@ function limit(maxCount) {
     activeCount++
     const res = await fn(...args)
     resolve(res)
+
     next()
   }
 
   const push = (fn, resolve, args) => {
-    taskQueue.push(run.bind(null, fn, resolve, args))
-    if (taskQueue.length && activeCount < maxCount) {
-      const task = taskQueue.shift()
-      task()
+    queue.push(run.bind(null, fn, resolve, args))
+    if (queue.length && activeCount < maxCount) {
+      queue.shift()()
     }
-    // next()
   }
-  
+
   const runner = (fn, ...args) => {
     return new Promise((resolve) => {
       push(fn, resolve, args)
