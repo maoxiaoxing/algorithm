@@ -1,0 +1,54 @@
+<script type="module">
+  import { data } from "./data.js"
+  import { getType } from '../../utils/utils.js'
+
+  function cloneLoop(x) {
+    if (getType(x) === 'null') return x
+
+    const cloneObj = x.constructor()
+    // const root = {}
+
+    const stack = [
+        {
+            parent: cloneObj,
+            key: undefined,
+            data: x,
+        }
+    ]
+
+    while (stack.length) {
+        const node = stack.pop()
+        const parent = node.parent
+        const key = node.key
+        const data = node.data
+
+        let res = parent
+        console.log(data)
+        if (key && parent[key]) {
+            res = parent[key] = parent[key].constructor()
+        }
+
+        if (getType(data) === 'null') parent[key] = data
+        if (getType(data) === 'regexp') parent[key] = new RegExp(data)
+        if (getType(data) === 'date') parent[key] = new Date(data)
+        if (typeof data !== 'object') parent[key] = data
+
+        for (const k in data) {
+            if (typeof data[k] === 'object') {
+                stack.push({
+                    parent: res,
+                    key: k,
+                    data: data[k]
+                })
+            } else {
+                res[k] = data[k]
+            }
+        }
+    }
+    return cloneObj
+
+  }
+
+console.log(cloneLoop(data))
+
+</script>
