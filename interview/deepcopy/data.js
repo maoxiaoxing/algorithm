@@ -9,5 +9,6 @@ export const data = {
   arr: [1, {a: 1}],
   nu: null,
   un: undefined,
-  date: new Date()
+  date: new Date(),
 }
+data.da = data
