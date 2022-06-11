@@ -1,54 +1,68 @@
 <script type="module">
-  import { data } from "./data.js"
-  import { getType } from '../../utils/utils.js'
+import { data } from "./data.js"
+import { getType } from '../../utils/utils.js'
 
-  function cloneLoop(x) {
-    if (getType(x) === 'null') return x
-
-    const cloneObj = x.constructor()
-    // const root = {}
+function cloneDeep(x) {
+    const root = {};
 
     const stack = [
         {
-            parent: cloneObj,
+            parent: root,
             key: undefined,
             data: x,
         }
-    ]
+    ];
 
-    while (stack.length) {
-        const node = stack.pop()
-        const parent = node.parent
-        const key = node.key
-        const data = node.data
+    while(stack.length) {
+        // 广度优先
+        const node = stack.pop();
+        const parent = node.parent;
+        const key = node.key;
+        const data = node.data;
 
-        let res = parent
-        console.log(data)
-        if (key && parent[key]) {
-            res = parent[key] = parent[key].constructor()
+        // 初始化赋值目标，key为undefined则拷贝到父元素，否则拷贝到子元素
+        let res = parent;
+        if (typeof key !== 'undefined') {
+            // console.log(data, '--')
+            if (getType(data) === 'null') {
+                res = parent[key] = data
+                continue
+            }
+            if (getType(data) === 'regexp') {
+                res = parent[key] = new RegExp(data)
+                continue
+            }
+            if (getType(data) === 'date') {
+                res = parent[key] = new Date(data)
+                continue
+            }
+            if (typeof obj !== 'object') {
+                res = parent[key] = data
+                continue
+            }
+
+            res = parent[key] = data.constructor();
         }
 
-        if (getType(data) === 'null') parent[key] = data
-        if (getType(data) === 'regexp') parent[key] = new RegExp(data)
-        if (getType(data) === 'date') parent[key] = new Date(data)
-        if (typeof data !== 'object') parent[key] = data
-
-        for (const k in data) {
-            if (typeof data[k] === 'object') {
-                stack.push({
-                    parent: res,
-                    key: k,
-                    data: data[k]
-                })
-            } else {
-                res[k] = data[k]
+        for(let k in data) {
+            if (data.hasOwnProperty(k)) {
+                if (typeof data[k] === 'object') {
+                    // 下一次循环
+                    stack.push({
+                        parent: res,
+                        key: k,
+                        data: data[k],
+                    });
+                } else {
+                    res[k] = data[k];
+                }
             }
         }
     }
-    return cloneObj
 
-  }
+    return root;
+}
 
-console.log(cloneLoop(data))
+console.log(cloneDeep(data))
 
 </script>
