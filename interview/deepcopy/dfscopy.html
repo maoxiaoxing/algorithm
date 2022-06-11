@@ -11,8 +11,6 @@ function cloneDeep(obj) {
 
     const map = new WeakMap()
 
-    // const root = map.get(obj) || new obj.constructor()
-    // map.set(obj, root)
     const root = new obj.constructor()
     const stack = [
         {
@@ -50,7 +48,7 @@ function cloneDeep(obj) {
                 continue
             }
 
-            res = parent[key] = data.constructor();
+            res = parent[key] = data.constructor()
         }
 
         for(let k in data) {
