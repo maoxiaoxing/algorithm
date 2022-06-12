@@ -3,9 +3,27 @@
  * @param {number} x
  * @return {boolean}
  */
+// var isPalindrome = function(x) {
+//   const s = String(x)
+//   const s1 = s.split('').reverse().join('')
+//   return s === s1
+// };
+
 var isPalindrome = function(x) {
   const s = String(x)
-  const s1 = s.split('').reverse().join('')
-  return s === s1
+  if (s.length === 1) return true
+  let left = 0
+  let right = s.length-1
+  let flag = false
+  while (left < right) {
+      if (s[left] === s[right]) {
+          flag = true
+          left++
+          right--
+      } else {
+          return flag = false
+      }
+  }
+  return flag
 };
 </script>
